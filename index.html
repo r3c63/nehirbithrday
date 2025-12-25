@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Birthday Nehir 💜</title>
+
+<!-- Special Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ========== GLOBAL ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --purple-1: #5a189a;
+  --purple-2: #9d4edd;
+  --purple-3: #7b2cbf;
+  --deep: #3c096c;
+  --accent: #ffb3ff;
+  --light: #ffe6ff;
+}
+
+body {
+  font-family: "Baloo 2", cursive;
+  background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: white;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ========== CLICK OVERLAY ========== */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, var(--purple-2), var(--deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  cursor: pointer;
+  transition: opacity 1s ease, visibility 1s ease, transform 1s ease;
+}
+
+#overlay h1 {
+  font-size: 3rem;
+  font-family: "Pacifico", cursive;
+  animation: pulse 1.5s infinite;
+  text-shadow: 0 6px 20px rgba(255,255,255,0.4);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ========== MAIN CONTENT ========== */
+.container {
+  text-align: center;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.title {
+  font-size: 3.2rem;
+  margin-bottom: 20px;
+  font-family: "Pacifico", cursive;
+  text-shadow: 0 0 15px rgba(255,255,255,0.6);
+}
+
+.message-box {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 25px;
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+/* ========== BUTTON ========== */
+button {
+  margin-top: 30px;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 30px;
+  background: var(--accent);
+  color: var(--deep);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  font-family: "Baloo 2", cursive;
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 25px rgba(255,255,255,0.6);
+  filter: brightness(1.08);
+}
+
+/* ========== POPUP ========== */
+#popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: var(--purple-3);
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(255,255,255,0.4);
+  transform: scale(0.8);
+  animation: popupIn 0.45s ease forwards;
+}
+
+@keyframes popupIn {
+  to { transform: scale(1); }
+}
+
+.popup-content h2 {
+  font-family: "Pacifico", cursive;
+  color: #ffdeff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+
+.popup-content img {
+  width: 200px;
+  margin-top: 16px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
+/* ========== BALLOONS ========== */
+.balloon {
+  position: absolute;
+  bottom: -150px;
+  width: 40px;
+  height: 55px;
+  border-radius: 50%;
+  animation: float 12s infinite ease-in, sway 4.5s infinite ease-in-out;
+  opacity: 0.8;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background: rgba(255,255,255,0.7);
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-120vh); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(16px); }
+}
+
+/* ========== FIREWORK PARTICLES ========== */
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: explode 1.2s linear forwards;
+  box-shadow: 0 0 10px rgba(255,255,255,0.85);
+}
+
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y)) scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* color variants */
+.particle.p1 { background: #ffb3ff; }
+.particle.p2 { background: #ffd1ff; }
+.particle.p3 { background: #f0a6ff; }
+.particle.p4 { background: #d8b4fe; }
+
+/* ========== FALLING PARTICLES (POPUP) ========== */
+.fall {
+  position: absolute;
+  top: -10px;
+  width: 6px;
+  height: 6px;
+  background: var(--light);
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: fall 3s linear infinite;
+  box-shadow: 0 0 8px rgba(255,255,255,0.7);
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(320px);
+    opacity: 0;
+  }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 560px) {
+  .title { font-size: 2.4rem; }
+  .message-box { font-size: 1.05rem; padding: 22px; }
+  #overlay h1 { font-size: 2.2rem; }
+}
+
+ /* Floating balloons */
+.balloons{
+      position:fixed; left:0; right:0; bottom:-80px; pointer-events:none; z-index:0;
+      display:flex; justify-content:space-evenly; opacity:.8;
+}
+.balloon{
+      width:50px; height:65px; border-radius:50% 50% 50% 50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0%, var(--pink-2) 30%, var(--pink-4) 100%);
+      position:relative; animation: rise 10s linear infinite;
+}
+.balloon::after{
+      content:""; position:absolute; left:50%; bottom:-20px; width:2px; height:22px;
+      background:#c89; transform:translateX(-50%);
+}
+.balloon:nth-child(2){ animation-duration:12s; filter:hue-rotate(20deg) }
+.balloon:nth-child(3){ animation-duration:14s; filter:hue-rotate(40deg) }
+.balloon:nth-child(4){ animation-duration:11s; filter:hue-rotate(60deg) }
+    @keyframes rise{
+      0%{ transform: translateY(0) translateX(0) }
+      50%{ transform: translateY(-50vh) translateX(10px) }
+      100%{ transform: translateY(-100vh) translateX(-10px) }
+}
+</style>
+</head>
+
+<body>
+
+<!-- CLICK OVERLAY -->
+<div id="overlay" aria-label="Click to begin">
+  <h1>💜 Click Me 💜</h1>
+</div>
+
+<!-- AUDIO -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MAIN -->
+<div class="container">
+  <h1 class="title">Happy Birthday Nehir 🎉💜</h1>
+
+  <div class="message-box">
+    Today is all about you ✨  
+    May your life be filled with joy, laughter, love, and beautiful surprises.  
+    You deserve all the happiness in the world 💜🎂
+  </div>
+
+  <button id="surpriseBtn" aria-haspopup="dialog" aria-controls="popup">Click for a Surprise 🐹</button>
+</div>
+  <div class="balloons" aria-hidden="true">
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+</div>
+
+<!-- POPUP -->
+<div id="popup" role="dialog" aria-modal="true" aria-label="Surprise popup">
+  <div class="popup-content">
+    <h2>Just for you 💜</h2>
+    <p style="margin-top:6px; opacity:0.9;">A tiny friend to make you smile.</p>
+    <img src="hamster.png" alt="Cute hamster holding a tiny heart" />
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* ========== ELEMENTS ========== */
+  const overlay = document.getElementById("overlay");
+  const music = document.getElementById("music");
+  const popup = document.getElementById("popup");
+  const surpriseBtn = document.getElementById("surpriseBtn");
+
+  /* ========== OVERLAY CLICK (music + reveal) ========== */
+  overlay.addEventListener("click", () => {
+    music.volume = 0;
+    const playPromise = music.play();
+    if (playPromise && typeof playPromise.then === "function") {
+      playPromise.catch(() => {
+        // If playback fails, user can click again; no error spam.
+      });
+    }
+
+    const fadeIn = setInterval(() => {
+      music.volume = Math.min(1, music.volume + 0.06);
+      if (music.volume >= 1) clearInterval(fadeIn);
+    }, 180);
+
+    overlay.style.transform = "scale(1.08)";
+    overlay.style.opacity = "0";
+    setTimeout(() => (overlay.style.visibility = "hidden"), 1000);
+  });
+
+  /* ========== BALLOONS ========== */
+  const balloonCount = 26;
+  for (let i = 0; i < balloonCount; i++) {
+    const b = document.createElement("div");
+    b.className = "balloon";
+    b.style.left = Math.random() * 100 + "vw";
+    b.style.background = `hsl(${270 + Math.random() * 40}, 80%, ${65 + Math.random() * 10}%)`;
+    b.style.animationDelay = Math.random() * 10 + "s";
+    b.style.width = 28 + Math.random() * 34 + "px";
+    b.style.height = 40 + Math.random() * 42 + "px";
+    document.body.appendChild(b);
+  }
+
+  /* ========== FIREWORKS ========== */
+  function burstFireworks() {
+    const cx = Math.random() * window.innerWidth;
+    const cy = Math.random() * window.innerHeight * 0.8; // avoid bottom UI overlap
+
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement("div");
+      p.className = "particle p" + (1 + (i % 4));
+      p.style.left = cx + "px";
+      p.style.top = cy + "px";
+
+      const angle = (Math.PI * 2 * i) / 24;
+      const speed = 60 + Math.random() * 90;
+      const dx = Math.cos(angle) * speed;
+      const dy = Math.sin(angle) * speed;
+
+      p.style.setProperty("--x", dx + "px");
+      p.style.setProperty("--y", dy + "px");
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1200);
+    }
+  }
+
+  setInterval(burstFireworks, 2800);
+
+  /* ========== POPUP: open/close + falling particles ========== */
+  function createFallingParticles() {
+    const content = document.querySelector(".popup-content");
+    const count = 22;
+    for (let i = 0; i < count; i++) {
+      const f = document.createElement("div");
+      f.className = "fall";
+      f.style.left = Math.random() * 100 + "%";
+      f.style.animationDelay = Math.random() * 1.8 + "s";
+      content.appendChild(f);
+      setTimeout(() => f.remove(), 3200);
+    }
+  }
+
+  function openPopup() {
+    popup.style.display = "flex";
+    createFallingParticles();
+    // simple focus trap entry
+    popup.addEventListener("click", closePopup);
+    document.addEventListener("keydown", escClose);
+  }
+
+  function closePopup() {
+    popup.style.display = "none";
+    popup.removeEventListener("click", closePopup);
+    document.removeEventListener("keydown", escClose);
+  }
+
+  function escClose(e) {
+    if (e.key === "Escape") closePopup();
+  }
+
+  surpriseBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openPopup();
+  });
+
+  // Expose for inline handlers if ever needed
+  window.openPopup = openPopup;
+  window.closePopup = closePopup;
+});
+</script>
+</body>
+</html>
