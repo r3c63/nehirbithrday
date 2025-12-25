@@ -9,13 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* ========== GLOBAL ========== */
+/* ========== GLOBAL RESET ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ========== THEME COLORS ========== */
 :root {
   --purple-1: #5a189a;
   --purple-2: #9d4edd;
@@ -25,6 +26,7 @@
   --light: #ffe6ff;
 }
 
+/* ========== BODY ========== */
 body {
   font-family: "Baloo 2", cursive;
   background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
@@ -35,6 +37,7 @@ body {
   color: white;
 }
 
+/* ========== GRADIENT ANIMATION ========== */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -59,6 +62,8 @@ body {
   font-family: "Pacifico", cursive;
   animation: pulse 1.5s infinite;
   text-shadow: 0 6px 20px rgba(255,255,255,0.4);
+  text-align: center;
+  padding: 0 20px;
 }
 
 @keyframes pulse {
@@ -67,7 +72,7 @@ body {
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* ========== MAIN CONTENT ========== */
+/* ========== MAIN CONTAINER ========== */
 .container {
   text-align: center;
   padding: 60px 20px;
@@ -75,6 +80,7 @@ body {
   z-index: 2;
 }
 
+/* ========== TITLE ========== */
 .title {
   font-size: 3.2rem;
   margin-bottom: 20px;
@@ -82,6 +88,7 @@ body {
   text-shadow: 0 0 15px rgba(255,255,255,0.6);
 }
 
+/* ========== MESSAGE BOX ========== */
 .message-box {
   background: rgba(255,255,255,0.15);
   backdrop-filter: blur(12px);
@@ -104,17 +111,20 @@ button {
   color: var(--deep);
   font-size: 1.1rem;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
   font-family: "Baloo 2", cursive;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 }
 
-button:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 0 25px rgba(255,255,255,0.6);
-  filter: brightness(1.08);
+/* Hover only on non-touch devices */
+@media (hover: hover) {
+  button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 0 25px rgba(255,255,255,0.6);
+    filter: brightness(1.08);
+  }
 }
 
-/* ========== POPUP ========== */
+/* ========== POPUP BACKGROUND ========== */
 #popup {
   position: fixed;
   inset: 0;
@@ -125,6 +135,7 @@ button:hover {
   z-index: 1000;
 }
 
+/* ========== POPUP CONTENT ========== */
 .popup-content {
   background: var(--purple-3);
   padding: 30px;
@@ -154,12 +165,10 @@ button:hover {
   box-shadow: 0 0 20px rgba(255,255,255,0.5);
 }
 
-/* ========== BALLOONS ========== */
+/* ========== FLOATING BALLOONS (JS) ========== */
 .balloon {
   position: absolute;
   bottom: -150px;
-  width: 40px;
-  height: 55px;
   border-radius: 50%;
   animation: float 12s infinite ease-in, sway 4.5s infinite ease-in-out;
   opacity: 0.8;
@@ -192,7 +201,6 @@ button:hover {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: var(--accent);
   border-radius: 50%;
   animation: explode 1.2s linear forwards;
   box-shadow: 0 0 10px rgba(255,255,255,0.85);
@@ -205,13 +213,12 @@ button:hover {
   }
 }
 
-/* color variants */
 .particle.p1 { background: #ffb3ff; }
 .particle.p2 { background: #ffd1ff; }
 .particle.p3 { background: #f0a6ff; }
 .particle.p4 { background: #d8b4fe; }
 
-/* ========== FALLING PARTICLES (POPUP) ========== */
+/* ========== POPUP FALLING PARTICLES ========== */
 .fall {
   position: absolute;
   top: -10px;
@@ -231,35 +238,80 @@ button:hover {
   }
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 560px) {
-  .title { font-size: 2.4rem; }
-  .message-box { font-size: 1.05rem; padding: 22px; }
-  #overlay h1 { font-size: 2.2rem; }
+/* ========== BOTTOM BALLOONS STRIP ========== */
+.balloons {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -80px;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  justify-content: space-evenly;
+  opacity: 0.8;
 }
 
- /* Floating balloons */
-.balloons{
-      position:fixed; left:0; right:0; bottom:-80px; pointer-events:none; z-index:0;
-      display:flex; justify-content:space-evenly; opacity:.8;
+.balloons .balloon {
+  width: 50px;
+  height: 65px;
+  background: radial-gradient(circle at 30% 30%, #fff 0%, #d98cff 35%, #9d4edd 100%);
+  animation: rise 10s linear infinite;
 }
-.balloon{
-      width:50px; height:65px; border-radius:50% 50% 50% 50%;
-      background: radial-gradient(circle at 30% 30%, #fff 0%, var(--pink-2) 30%, var(--pink-4) 100%);
-      position:relative; animation: rise 10s linear infinite;
+
+.balloons .balloon:nth-child(2) { animation-duration: 12s; filter: hue-rotate(20deg); }
+.balloons .balloon:nth-child(3) { animation-duration: 14s; filter: hue-rotate(40deg); }
+.balloons .balloon:nth-child(4) { animation-duration: 11s; filter: hue-rotate(60deg); }
+
+@keyframes rise {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-50vh) translateX(10px); }
+  100% { transform: translateY(-100vh) translateX(-10px); }
 }
-.balloon::after{
-      content:""; position:absolute; left:50%; bottom:-20px; width:2px; height:22px;
-      background:#c89; transform:translateX(-50%);
+
+/* ========== MOBILE RESPONSIVE ========== */
+@media (max-width: 480px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    padding: 40px 14px;
+  }
+
+  .title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .message-box {
+    max-width: 100%;
+    font-size: 1rem;
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  #overlay h1 {
+    font-size: 1.9rem;
+  }
+
+  .popup-content {
+    width: 90%;
+    max-width: 320px;
+    padding: 20px;
+  }
+
+  .popup-content img {
+    width: 160px;
+  }
 }
-.balloon:nth-child(2){ animation-duration:12s; filter:hue-rotate(20deg) }
-.balloon:nth-child(3){ animation-duration:14s; filter:hue-rotate(40deg) }
-.balloon:nth-child(4){ animation-duration:11s; filter:hue-rotate(60deg) }
-    @keyframes rise{
-      0%{ transform: translateY(0) translateX(0) }
-      50%{ transform: translateY(-50vh) translateX(10px) }
-      100%{ transform: translateY(-100vh) translateX(-10px) }
-}
+
 </style>
 </head>
 
