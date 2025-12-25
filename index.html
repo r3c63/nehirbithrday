@@ -165,35 +165,50 @@ button {
   box-shadow: 0 0 20px rgba(255,255,255,0.5);
 }
 
-/* ========== FLOATING BALLOONS (JS) ========== */
+/* ========== RANDOM FLOATING BALLOONS ========== */
 .balloon {
   position: absolute;
-  bottom: -150px;
+  bottom: -160px;
   border-radius: 50%;
-  animation: float 12s infinite ease-in, sway 4.5s infinite ease-in-out;
-  opacity: 0.8;
+  opacity: 0.85;
   filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+
+  /* Randomized via CSS variables */
+  animation:
+    floatUp var(--dur) linear infinite,
+    swaySide var(--swayDur) ease-in-out infinite;
 }
 
+/* Balloon string */
 .balloon::after {
   content: "";
   position: absolute;
   bottom: -18px;
   left: 50%;
-  transform: translateX(-50%);
   width: 2px;
-  height: 20px;
+  height: 22px;
   background: rgba(255,255,255,0.7);
+  transform: translateX(-50%);
 }
 
-@keyframes float {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-120vh); }
+/* Vertical rise */
+@keyframes floatUp {
+  from {
+    transform: translateX(0) translateY(0);
+  }
+  to {
+    transform: translateX(var(--drift)) translateY(-120vh);
+  }
 }
 
-@keyframes sway {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(16px); }
+/* Side sway */
+@keyframes swaySide {
+  0%, 100% {
+    margin-left: calc(var(--sway) * -1);
+  }
+  50% {
+    margin-left: var(--sway);
+  }
 }
 
 /* ========== FIREWORK PARTICLES ========== */
@@ -384,17 +399,36 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ========== BALLOONS ========== */
-  const balloonCount = 26;
-  for (let i = 0; i < balloonCount; i++) {
-    const b = document.createElement("div");
-    b.className = "balloon";
-    b.style.left = Math.random() * 100 + "vw";
-    b.style.background = `hsl(${270 + Math.random() * 40}, 80%, ${65 + Math.random() * 10}%)`;
-    b.style.animationDelay = Math.random() * 10 + "s";
-    b.style.width = 28 + Math.random() * 34 + "px";
-    b.style.height = 40 + Math.random() * 42 + "px";
-    document.body.appendChild(b);
-  }
+  /* ========== BALLOONS ========== */
+const balloonCount = window.innerWidth < 600 ? 12 : 26;
+
+for (let i = 0; i < balloonCount; i++) {
+  const b = document.createElement("div");
+  b.className = "balloon";
+
+  // Random size
+  const w = 28 + Math.random() * 34;
+  b.style.width = w + "px";
+  b.style.height = w * 1.25 + "px";
+
+  // Random start position
+  b.style.left = Math.random() * 100 + "vw";
+
+  // Random motion variables
+  b.style.setProperty("--drift", `${(Math.random() * 120 - 60)}px`);
+  b.style.setProperty("--sway", `${(Math.random() * 25 + 10)}px`);
+  b.style.setProperty("--dur", `${8 + Math.random() * 8}s`);
+  b.style.setProperty("--swayDur", `${2.5 + Math.random() * 3}s`);
+
+  // Random color
+  b.style.background = `hsl(${270 + Math.random() * 40}, 80%, ${65 + Math.random() * 10}%)`;
+
+  // Random delay
+  b.style.animationDelay = `${Math.random() * 6}s`;
+
+  document.body.appendChild(b);
+}
+
 
   /* ========== FIREWORKS ========== */
   function burstFireworks() {
